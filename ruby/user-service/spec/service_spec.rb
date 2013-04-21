@@ -55,6 +55,24 @@ describe "Service" do
 			attributes["bio"].should eq "Test User"
 			attributes.should_not have_key("password")
 		end
+	end
 
+	describe "PUT user to /api/v1/users/mike" do
+		it "Should update a user" do
+			User.create(
+				name: 		 "mike", 
+				email: 		 "mike@exaple.com",
+				password:  "pass", 
+				bio: 			 "Nice person" 
+				)
+
+			put '/api/v1/users/mike', {
+				:bio 			=> "mean person"
+			}.to_json
+
+			get '/api/v1/users/mike'
+			attributes = JSON.parse(last_response.body)["user"]
+			attributes["bio"].should eq "mean person"
+		end
 	end
 end

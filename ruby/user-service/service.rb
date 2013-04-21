@@ -31,16 +31,33 @@ get '/api/v1/users/:name' do
 end
 
 post '/api/v1/users' do
-	#puts JSON.parse(request.body)
+
 	begin
 		user = User.create(JSON.parse(request.body.read))
 		if user.valid?
-			puts user
 			user.to_json
 		else
 			error 400, user.errors.to_json
 		end
 	rescue => e
 		error 400, e.message.to_json
+	end
+end
+
+put '/api/v1/users/:name' do
+	user = User.find_by_name(params[:name])
+
+	if user 
+		begin
+			if user.update_attributes(JSON.parse(request.body.read))
+				user.to_json
+			else
+				error 400, user.errors.to_json
+			end
+		rescue => e
+			error 400, e.message.to_json
+		end
+	else
+		error 404, {:error => "User not found"}.to_json
 	end
 end
