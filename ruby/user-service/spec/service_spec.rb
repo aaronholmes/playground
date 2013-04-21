@@ -87,9 +87,31 @@ describe "Service" do
 
 			delete '/api/v1/users/mike'
 			last_response.status.should eq 200
-			
+
 			get '/api/v1/users/mike'
 			last_response.status.should eq 404
+		end
+	end
+
+	describe "POST on /api/v1/users/:id/sessions" do
+		before(:each) do
+			User.create(name: "larry", password: "mypass")
+		end
+
+		it "should return the user object on valid credentials" do
+			post '/api/v1/users/larry/sessions', {
+				password: "mypass"
+			}.to_json
+			last_response.status.should eq 200
+			attributes = JSON.parse(last_response.body)["user"]
+			attributes["name"].should eq "larry"
+		end
+
+		it "Should fail on invalid credentials" do
+			post '/api/v1/users/larry/sessions', {
+				password: "badpass"
+			}.to_json
+			last_response.status.should eq 400
 		end
 	end
 end
