@@ -75,4 +75,21 @@ describe "Service" do
 			attributes["bio"].should eq "mean person"
 		end
 	end
+
+	describe "DELETE on /api/v1/users/:name" do
+		it "Should delete the user" do
+			User.create(
+				name: 		 "mike", 
+				email: 		 "mike@exaple.com",
+				password:  "pass", 
+				bio: 			 "Nice person" 
+				)
+
+			delete '/api/v1/users/mike'
+			last_response.status.should eq 200
+			
+			get '/api/v1/users/mike'
+			last_response.status.should eq 404
+		end
+	end
 end
