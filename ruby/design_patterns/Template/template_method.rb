@@ -64,7 +64,7 @@ class HTMLReport < Report
 	def output_line(line)
 		puts("  <p>#{line}</p>")
 	end
-	
+
 	def output_body_end
     puts('</body>')
 	end
@@ -75,8 +75,8 @@ class HTMLReport < Report
 end
 
 # Test our stuff
-report = PlainTextReport.new
-report.output_report
+#report = PlainTextReport.new
+#report.output_report
 
-report = HTMLReport.new
-report.output_report
+#report = HTMLReport.new
+#report.output_report
