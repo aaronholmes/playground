@@ -16,4 +16,8 @@ class CompositeTest < Test::Unit::TestCase
 		@make_cake_task = MakeCakeTask.new
 		assert_equal(@make_cake_task.get_time_required, 66.0)
 	end
+
+	def test_child_to_parent_relationship
+		# Not sure what to do with this yet...
+	end
 end

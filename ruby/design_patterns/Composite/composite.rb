@@ -4,10 +4,11 @@
 
 # Abstract Base Task class (COMPONENT)
 class Task 
-	attr_reader :name
+	attr_accessor :name, :parent
 
 	def initialize(name)
 		@name = name
+		@parent = nil
 	end
 
 	def get_time_required
@@ -66,10 +67,13 @@ class MakeBatterTask < Task
 
 	def add_subtask(task)
 		@sub_tasks << task
+		# Add a pointer so children know about parent
+		task.parent = self
 	end
 
 	def remove_subtask
 		@sub_tasks.delete(task)
+		task.parent = nil
 	end
 
 	def get_time_required
