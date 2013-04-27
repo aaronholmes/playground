@@ -20,4 +20,12 @@ class CompositeTest < Test::Unit::TestCase
 	def test_child_to_parent_relationship
 		# Not sure what to do with this yet...
 	end
+
+	def test_get_total_number_basic_tasks
+		@make_batter_task = MakeBatterTask.new
+		@make_cake_task = MakeCakeTask.new
+
+		assert_equal(@make_batter_task.total_number_basic_tasks, 2)
+		assert_equal(@make_cake_task.total_number_basic_tasks, 4)
+	end
 end

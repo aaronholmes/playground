@@ -14,6 +14,10 @@ class Task
 	def get_time_required
 		0.0
 	end
+
+	def total_number_basic_tasks
+    1
+	end
 end
 
 # Single tasks - (LEAF)
@@ -81,6 +85,12 @@ class MakeBatterTask < Task
 		@sub_tasks.each {|task| time += task.get_time_required}
 		time
 	end
+
+	def total_number_basic_tasks
+    total = 0
+    @sub_tasks.each {|task| total += task.total_number_basic_tasks}
+    total
+	end
 end
 
 class MakeCakeTask < Task
@@ -104,5 +114,11 @@ class MakeCakeTask < Task
 		time = 0.0
 		@sub_tasks.each {|task| time += task.get_time_required}
 		time
+	end
+
+	def total_number_basic_tasks
+    total = 0
+    @sub_tasks.each {|task| total += task.total_number_basic_tasks}
+    total
 	end
 end
