@@ -13,6 +13,7 @@ module Wordpress
 				doc.search('item').map do |doc_item|
 					item = {}
 					item[:link] = doc_item.at('link').text
+					item[:title] = doc_item.at('title').text
 					item
 				end
 			end

@@ -1,4 +1,4 @@
-require 'rspec'
+require 'spec_helper'
 require_relative '../peepcode_client.rb'
 
 describe Wordpress::Comments::Client do
@@ -15,12 +15,17 @@ describe Wordpress::Comments::Client do
 	describe "#parse XML" do
 
 		let(:xml) { File.read(File.join('spec','fixtures','feed.xml')) }
+		let(:comments) { client.parse xml }
+		let(:comment) { comments.first }
 
 		it "extracts the link" do
-			comments = client.parse xml
-			comment = comments.first
 			link = "http://mashable.com/2012/07/18/ipad-early-photos/comment-page-1/#comment-18239503"
 			expect(comment[:link]).to eq link
+		end
+
+		it "extracts the title" do
+			title = "Comment on The Earliest Photos of Apple’s iPad Hit the Web by Fido"
+			expect(comment[:title]).to eq title
 		end
 	end
 end
