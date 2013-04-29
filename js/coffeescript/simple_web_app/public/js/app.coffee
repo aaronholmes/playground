@@ -4,4 +4,4 @@
 #	})
 
 jQuery ->
-	$('#entry').focus
+	($ '#entry').focus
