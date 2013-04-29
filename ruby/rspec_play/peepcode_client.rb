@@ -1,4 +1,6 @@
 require 'nokogiri'
+require 'date'
+require 'open-uri'
 
 module Wordpress
 	module Comments
@@ -9,7 +11,7 @@ module Wordpress
 			end
 
 			def parse xml
-				doc = Nokogiri::XML xml
+				doc = Nokogiri::XML(xml) { |config| config.strict }
 				doc.search('item').map do |doc_item|
 					item = {}
 					item[:link] = doc_item.at('link').text
@@ -19,6 +21,16 @@ module Wordpress
 					item
 				end
 			end
+
+			def fetch
+				xml = get @url
+				parse xml
+			end
+
+			private
+				def get url
+					open url
+				end
 		end
 	end
 end

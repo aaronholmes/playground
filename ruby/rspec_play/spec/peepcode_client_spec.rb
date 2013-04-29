@@ -4,18 +4,18 @@ require_relative 'support/match_date'
 
 describe Wordpress::Comments::Client do
 
-	let (:client) { Wordpress::Comments::Client.new 'http://mashable.com/comments/feed/' }
+	let(:client) { Wordpress::Comments::Client.new 'http://peepcode.com/code/rspec/comments/feed.xml' }
+	let(:xml) { File.read(File.join('spec','fixtures','feed.xml')) }
 	
 	describe "#initialize on client" do
 		it "stores a URL" do
 			
-			expect(client.url).to eq 'http://mashable.com/comments/feed/' 
+			expect(client.url).to eq 'http://peepcode.com/code/rspec/comments/feed.xml' 
 		end
 	end
 
 	describe "#parse XML" do
 
-		let(:xml) { File.read(File.join('spec','fixtures','feed.xml')) }
 		let(:comments) { client.parse xml }
 		let(:comment) { comments.first }
 
@@ -39,6 +39,50 @@ describe Wordpress::Comments::Client do
 
 		it "extracts the published date (custom matcher)" do
 			expect(comment[:date]).to match_date "2012-07-18"
+		end
+	end
+
+	describe "#fetch" do
+
+		let(:comments) { client.fetch }
+
+		context "success" do
+			
+			before(:each) do
+				# stub doesn't care if it's called
+				# client.stub(:get).and_return(xml)
+
+				# mocks do care
+				client.should_receive(:get).and_return(xml)
+
+			end
+
+			it "should build comment objects" do
+				expect(comments.length).to eq 30
+			end
+		end
+
+		context "bad URL" do
+			let(:client) { Wordpress::Comments::Client.new 'not a url' }
+
+			it "raises an error" do 
+				expect {
+					client.fetch
+					}.to raise_error(Errno::ENOENT)
+			end
+		end
+
+		context "bad XML" do
+
+			before(:each) do
+				client.stub(:get).and_return("BAD XML") 
+			end
+
+			it "raise error from Nokogiri" do
+				expect {
+					client.fetch
+					}.to raise_error(Nokogiri::XML::SyntaxError)
+			end
 		end
 	end
 end
