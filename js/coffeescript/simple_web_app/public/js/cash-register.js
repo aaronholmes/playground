@@ -10,6 +10,7 @@
         rawDescription = "";
       }
       _ref = this.parseRawDescription(rawDescription), all = _ref[0], this.title = _ref[1], this.price = _ref[2];
+      this.price = new Money(this.price);
     }
 
     Dish.prototype.parseRawDescription = function(rawDescription) {

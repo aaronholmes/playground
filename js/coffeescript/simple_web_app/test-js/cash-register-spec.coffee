@@ -17,4 +17,4 @@ describe "Dish", ->
 		(expect @dish.title).toEqual "Chicken Dinner"
 
 	it "extracts the price", ->
-		(expect @dish.price).toEqual "$9.99"
+		(expect @dish.price.cents).toEqual 999

@@ -17,7 +17,7 @@
       return (expect(this.dish.title)).toEqual("Chicken Dinner");
     });
     return it("extracts the price", function() {
-      return (expect(this.dish.price)).toEqual("$9.99");
+      return (expect(this.dish.price.cents)).toEqual(999);
     });
   });
 

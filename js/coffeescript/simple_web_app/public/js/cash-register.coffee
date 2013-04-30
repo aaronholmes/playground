@@ -9,6 +9,7 @@ window.Dish = class Dish
 		# array to array of values
 		# Returns All, Title, and Price - all is throwaway variable
 		[all, @title, @price] = @parseRawDescription rawDescription
+		@price = new Money @price
 
 	parseRawDescription: (rawDescription) ->
 		pattern = ///
