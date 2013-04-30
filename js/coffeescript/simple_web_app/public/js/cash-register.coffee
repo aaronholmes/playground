@@ -18,3 +18,7 @@ window.Dish = class Dish
 		///
 		result = rawDescription.match pattern
 		r.trim() for r in result
+
+	toJSON: ->
+		title: @title
+		price: @price.toString()

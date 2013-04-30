@@ -4,6 +4,9 @@
 
   window.Money = Money = (function() {
     function Money(rawString) {
+      if (rawString == null) {
+        rawString = '';
+      }
       this.cents = this.parseCents(rawString);
     }
 

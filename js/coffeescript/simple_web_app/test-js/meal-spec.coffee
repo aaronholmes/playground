@@ -16,3 +16,7 @@ describe "Meal", ->
 		it "adds several dishes", ->
 			@meal.add @donut, @fish
 			(expect @meal.dishes.length).toEqual 2
+
+		it "calculates the total price", ->
+			@meal.add @donut, @fish
+			(expect @meal.totalPrice().cents).toEqual 1624

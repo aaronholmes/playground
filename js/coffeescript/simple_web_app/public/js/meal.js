@@ -15,6 +15,37 @@
       return (_ref = this.dishes).push.apply(_ref, dishes);
     };
 
+    Meal.prototype.totalPrice = function() {
+      var dish, total, _i, _len, _ref;
+
+      total = new Money;
+      _ref = this.dishes;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        dish = _ref[_i];
+        total.cents = total.cents + dish.price.cents;
+      }
+      return total;
+    };
+
+    Meal.prototype.toJSON = function() {
+      var _this = this;
+
+      return {
+        dishes: (function() {
+          var dish, _i, _len, _ref, _results;
+
+          _ref = _this.dishes;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            dish = _ref[_i];
+            _results.push(dish.toJSON());
+          }
+          return _results;
+        })(),
+        price: this.totalPrice().toString()
+      };
+    };
+
     return Meal;
 
   })();

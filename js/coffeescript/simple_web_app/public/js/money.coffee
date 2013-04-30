@@ -1,6 +1,6 @@
 
 window.Money = class Money 
-	constructor: (rawString) ->
+	constructor: (rawString='') ->
 		@cents = @parseCents rawString
 
 	parseCents: (rawString) ->
@@ -13,5 +13,5 @@ window.Money = class Money
 		# Add a leading 0 if cents are less than 10 - ie $10.05
 		if cents < 10
 			cents = "0"+cents
-			
+
 		"$#{Math.floor(@cents/100)}.#{cents}"

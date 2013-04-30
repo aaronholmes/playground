@@ -26,6 +26,13 @@
       return _results;
     };
 
+    Dish.prototype.toJSON = function() {
+      return {
+        title: this.title,
+        price: this.price.toString()
+      };
+    };
+
     return Dish;
 
   })();

@@ -13,9 +13,13 @@
         this.meal.add(this.donut);
         return (expect(this.meal.dishes.length)).toEqual(1);
       });
-      return it("adds several dishes", function() {
+      it("adds several dishes", function() {
         this.meal.add(this.donut, this.fish);
         return (expect(this.meal.dishes.length)).toEqual(2);
+      });
+      return it("calculates the total price", function() {
+        this.meal.add(this.donut, this.fish);
+        return (expect(this.meal.totalPrice().cents)).toEqual(1624);
       });
     });
   });
